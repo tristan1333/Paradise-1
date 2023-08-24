@@ -37,6 +37,7 @@
 	can_collar = TRUE
 	gold_core_spawnable = FRIENDLY_SPAWN
 	var/chew_probability = 1
+	var/toast = FALSE //Bad way to do it, used so shocked mice apply color
 
 /mob/living/simple_animal/mouse/Initialize(mapload)
 	. = ..()
@@ -108,6 +109,7 @@
 /mob/living/simple_animal/mouse/proc/toast()
 	add_atom_colour("#3A3A3A", FIXED_COLOUR_PRIORITY)
 	desc = "It's toast."
+	toast = TRUE
 	death()
 
 /mob/living/simple_animal/mouse/proc/splat()
@@ -123,6 +125,13 @@
 	layer = MOB_LAYER
 	if(client)
 		client.time_died_as_mouse = world.time
+	if(!mind)
+		if(!gibbed)
+			var/obj/item/reagent_containers/food/snacks/deadmouse/new_dead_mouse = new(src.loc, src)
+			if(toast)
+				new_dead_mouse.desc = "They're toast."
+				new_dead_mouse.add_atom_colour("#3A3A3A", FIXED_COLOUR_PRIORITY)
+			qdel(src)
 
 /*
  * Mouse types
@@ -217,3 +226,22 @@
 		qdel(src)
 		return TRUE
 	return ..()
+
+/obj/item/reagent_containers/food/snacks/deadmouse
+	name = "dead"
+	desc = "A dead mouse."
+	icon = 'icons/mob/animal.dmi'
+	icon_state = "mouse_gray"
+	list_reagents = list("nutriment" = 3, "vitamin" = 2)
+	tastes = list("rat"=1)
+	bitesize = 3
+	filling_color = "#F2B6EA"
+	var/body_color = "gray"
+	var/critter_type = /mob/living/simple_animal/mouse
+
+/obj/item/reagent_containers/food/snacks/deadmouse/Initialize(mapload, mob/living/simple_animal/mouse/dead_critter)
+	. = ..()
+	if(dead_critter)
+		body_color = dead_critter.mouse_color
+		name = dead_critter.name
+		icon_state = dead_critter.icon_dead

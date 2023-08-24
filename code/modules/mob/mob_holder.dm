@@ -109,6 +109,12 @@
 	icon = 'icons/mob/animal.dmi'
 	icon_state = "mouse_gray"
 
+/obj/item/holder/mouse/process()
+	if(contents.len)
+		if(istype(contents[1], /obj/item/reagent_containers/food/snacks/deadmouse))
+			contents[1].forceMove(locate(loc.x,loc.y,loc.z))
+	..()
+
 /obj/item/holder/bunny
 	name = "bunny"
 	desc = "Awww a cute bunny"
