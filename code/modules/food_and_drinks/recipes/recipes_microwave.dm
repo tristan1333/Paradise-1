@@ -147,6 +147,13 @@
 	)
 	result = /obj/item/reagent_containers/food/snacks/appendixburger
 
+/datum/recipe/microwave/appendixburger_bitten
+	items = list(
+		/obj/item/reagent_containers/food/snacks/appendix,
+		/obj/item/reagent_containers/food/snacks/bun
+		)
+	result = /obj/item/reagent_containers/food/snacks/appendixburger
+
 /datum/recipe/microwave/bearger
 	items = list(
 		/obj/item/reagent_containers/food/snacks/bun,
