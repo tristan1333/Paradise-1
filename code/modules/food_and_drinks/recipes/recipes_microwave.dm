@@ -181,13 +181,6 @@
 		)
 	result = /obj/item/reagent_containers/food/snacks/baconburger
 
-/datum/recipe/microwave/ratburger
-	items = list(
-		/obj/item/reagent_containers/food/snacks/bun,
-		/obj/item/reagent_containers/food/snacks/deadmouse
-		)
-	result = /obj/item/reagent_containers/food/snacks/ratburger
-
 /datum/recipe/microwave/mcrib
 	items = list(
 		/obj/item/reagent_containers/food/snacks/bun,

@@ -17,17 +17,6 @@
 /obj/item/lazarus_injector/afterattack(atom/target, mob/user, proximity_flag)
 	if(!loaded)
 		return
-	if(istype(target, /obj/item/reagent_containers/food/snacks/deadmouse))
-		var/mob/living/simple_animal/mouse/new_mouse = new(target.loc)
-		var/obj/item/reagent_containers/food/snacks/deadmouse/t_deadmouse = target
-		new_mouse.name = target.name
-		new_mouse.mouse_color = t_deadmouse.body_color
-		new_mouse.icon_state = "mouse_[new_mouse.mouse_color]"
-		new_mouse.icon_living = "mouse_[new_mouse.mouse_color]"
-		new_mouse.icon_dead = "mouse_[new_mouse.mouse_color]_dead"
-		new_mouse.icon_resting = "mouse_[new_mouse.mouse_color]_sleep"
-		qdel(target)
-		return
 	if(isliving(target) && proximity_flag)
 		if(isanimal(target))
 			var/mob/living/simple_animal/M = target
