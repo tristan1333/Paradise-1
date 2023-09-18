@@ -7,7 +7,7 @@
 	w_class = WEIGHT_CLASS_TINY
 	actions_types = list(/datum/action/item_action/toggle_radio_jammer)
 	var/active = FALSE
-	var/range = 12
+	var/range = 15
 
 /obj/item/jammer/Destroy()
 	GLOB.active_jammers -= src
@@ -265,6 +265,7 @@
 	flawless = TRUE
 
 /obj/item/fireproofing_injector
+	name = "fireproofing injector"
 	desc = "It contains an alien nanoswarm created by the technomancers of boron. Through near sorcerous feats via use of nanomachines, it enables its user to become fully fireproof."
 	icon = 'icons/obj/hypo.dmi'
 	icon_state = "combat_hypo"
@@ -404,3 +405,22 @@
 
 	times_used = max_uses - 1
 	activate_batterer()
+
+/obj/item/handheld_mirror
+	name = "hand mirror"
+	desc = "Style, on the go!"
+	icon = 'icons/obj/device.dmi'
+	icon_state = "hand_mirror"
+	w_class = WEIGHT_CLASS_TINY
+	var/datum/ui_module/appearance_changer/appearance_changer_holder
+
+/datum/datum/ui_module_appearance_changer/appearance_changer_holder/ui_interact(mob/user, ui_key = "main", datum/tgui/ui = null, force_open = FALSE, datum/tgui/master_ui = null, datum/ui_state/state = GLOB.hands_state)
+	..(user, ui_key, ui, force_open, master_ui, state)
+
+/obj/item/handheld_mirror/ui_interact(mob/user, ui_key = "main", datum/tgui/ui = null, force_open = FALSE, datum/tgui/master_ui = null, datum/ui_state/state = GLOB.hands_state)
+	appearance_changer_holder.ui_interact(user, ui_key, ui, force_open, master_ui, state)
+
+/obj/item/handheld_mirror/attack_self(mob/user)
+	if(ishuman(user))
+		appearance_changer_holder = new(src, user)
+		ui_interact(user)
